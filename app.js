@@ -17,9 +17,14 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Connect to MONGODB
-mongoose.connect(process.env.MONGO_URI, () => {
-	console.log('Connected to Database!', process.env.MONGO_URI);
-});
+// mongoose.connect(process.env.MONGO_URI, () => {
+// 	console.log('Connected to Database!', process.env.MONGO_URI);
+// });
+const mongoURI = 'mongodb+srv://admin:admin@cluster0.fsh9ilt.mongodb.net/coder_cars'
+mongoose
+  .connect(mongoURI)
+  .then(() => console.log(`DB connected ${mongoURI}`))
+  .catch((err) => console.log(err));
 
 
 app.use('/', indexRouter);
