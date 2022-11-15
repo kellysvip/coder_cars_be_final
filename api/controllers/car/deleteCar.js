@@ -1,12 +1,12 @@
 const mongoose = require("mongoose");
-const { sendResponse } = require("../../../helpers/utils");
+const { sendResponse, AppError } = require("../../../helpers/utils");
 const Car = require("../../../models/Car");
 
 const deleteCar = async (req, res, next) => {
   try {
     const carId = req.params;
     
-    const findId = await Car.exists(carId)
+    const findId = await Car.findById(carId.id)
     if (!findId) throw new AppError(404, "Not Found Car")
         
     const options = { isDeleted: true };
