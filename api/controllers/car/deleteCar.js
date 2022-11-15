@@ -8,10 +8,10 @@ const deleteCar = async (req, res, next) => {
 
     const findId = await Car.findById(carId.id);
     if (!findId) throw new AppError(404, "Not Found Car");
-    
-    await Car.findByIdAndUpdate(carId.id, { isDeleted: true });
 
-    const updated = await Car.findById(carId.id);
+    const updated = await Car.findByIdAndUpdate(carId.id, { isDeleted: true }, {new: true});
+
+    // const updated = await Car.findById(carId.id);
 
     sendResponse(res, 200, true, { data: updated }, null, "Delete Car success");
   } catch (error) {
