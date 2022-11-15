@@ -21,9 +21,10 @@ const updateCar = async (req, res, next) => {
     const findId = await Car.findById(carId.id)
     if (!findId) throw new AppError(404, "Not Found Car")
 
-    const updated = await Car.findByIdAndUpdate(carId.id, updateInfo);
-
-    sendResponse(res, 200, true, { updateInfo }, null, "Update Car success");
+    await Car.findByIdAndUpdate(carId.id, updateInfo);
+    
+    const updated = await Car.findById(carId.id)
+    sendResponse(res, 200, true, { updated }, null, "Update Car success");
   } catch (error) {
     next(error);
   }

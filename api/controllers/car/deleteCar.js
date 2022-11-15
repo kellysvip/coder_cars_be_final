@@ -5,18 +5,18 @@ const Car = require("../../../models/Car");
 const deleteCar = async (req, res, next) => {
   try {
     const carId = req.params;
-    
-    const findId = await Car.findById(carId.id)
-    if (!findId) throw new AppError(404, "Not Found Car")
-        
-    const options = { isDeleted: true };
-    const updated = await Car.findByIdAndUpdate(carId.id, options);
 
+    const findId = await Car.findById(carId.id);
+    if (!findId) throw new AppError(404, "Not Found Car");
+    
+    await Car.findByIdAndUpdate(carId.id, { isDeleted: true });
+
+    const updated = await Car.findById(carId.id);
 
     sendResponse(res, 200, true, { data: updated }, null, "Delete Car success");
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 module.exports = { deleteCar };
